@@ -1,0 +1,116 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/cf-image-bridge/models.schema.json",
+  "title": "cf-image-bridge model registry",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["models"],
+  "properties": {
+    "$schema": { "type": "string" },
+    "defaultModel": {
+      "description": "Model name used when a request omits `model`. Defaults to the first entry.",
+      "type": "string"
+    },
+    "maxPromptLength": {
+      "description": "Reject prompts longer than this many characters.",
+      "type": "integer",
+      "minimum": 1,
+      "default": 2048
+    },
+    "maxImages": {
+      "description": "Upper bound for the OpenAI `n` parameter.",
+      "type": "integer",
+      "minimum": 1,
+      "default": 4
+    },
+    "models": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/model" }
+    }
+  },
+  "$defs": {
+    "model": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "id"],
+      "properties": {
+        "name": {
+          "description": "Name exposed through the OpenAI API (`model` field).",
+          "type": "string",
+          "minLength": 1
+        },
+        "id": {
+          "description": "Workers AI model id, e.g. `@cf/black-forest-labs/flux-1-schnell`.",
+          "type": "string",
+          "minLength": 1
+        },
+        "transport": {
+          "description": "`json` sends a JSON body, `multipart` sends FormData.",
+          "enum": ["json", "multipart"],
+          "default": "json"
+        },
+        "size": {
+          "description": "Width/height support. `null` means the model is fixed-size and `size` is ignored.",
+          "oneOf": [{ "type": "null" }, { "$ref": "#/$defs/size" }],
+          "default": null
+        },
+        "references": {
+          "$ref": "#/$defs/references"
+        },
+        "params": {
+          "description": "Extra model parameters merged into every request (e.g. `{ \"steps\": 4 }`).",
+          "type": "object"
+        }
+      }
+    },
+    "size": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["max"],
+      "properties": {
+        "min": { "type": "integer", "minimum": 1, "default": 256 },
+        "max": { "type": "integer", "minimum": 1 },
+        "step": {
+          "description": "Sizes are rounded up to a multiple of this value.",
+          "type": "integer",
+          "minimum": 1,
+          "default": 16
+        },
+        "default": {
+          "type": "array",
+          "items": { "type": "integer", "minimum": 1 },
+          "minItems": 2,
+          "maxItems": 2,
+          "default": [1024, 1024]
+        },
+        "format": {
+          "description": "`wh` sends two fields, `size` sends a single `WxH` field.",
+          "enum": ["wh", "size"],
+          "default": "wh"
+        },
+        "widthField": { "type": "string", "default": "width" },
+        "heightField": { "type": "string", "default": "height" },
+        "sizeField": { "type": "string", "default": "size" }
+      }
+    },
+    "references": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "max": {
+          "description": "How many input images the model accepts. 0 disables edits.",
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 16,
+          "default": 0
+        },
+        "field": {
+          "description": "Form field name for each reference; must contain `{index}` when max > 1.",
+          "type": "string",
+          "default": "input_image_{index}"
+        }
+      }
+    }
+  }
+}

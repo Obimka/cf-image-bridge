@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Setup help
+    url: https://github.com/Obimka/cf-image-bridge/blob/main/README.md#cloudflare-setup
+    about: The Cloudflare setup chapter covers deploy, secrets, custom domains and troubleshooting.
+  - name: Install with an agent
+    url: https://github.com/Obimka/cf-image-bridge/blob/main/AGENTS.md
+    about: AGENTS.md is the runbook an AI coding agent follows to install this project.

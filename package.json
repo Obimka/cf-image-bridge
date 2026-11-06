@@ -1,0 +1,44 @@
+{
+  "name": "cf-image-bridge",
+  "version": "1.0.0",
+  "private": false,
+  "description": "OpenAI-compatible Images API in front of Cloudflare Workers AI, configured by a JSON model registry.",
+  "type": "module",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Obimka/cf-image-bridge.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Obimka/cf-image-bridge/issues"
+  },
+  "homepage": "https://github.com/Obimka/cf-image-bridge#readme",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "test": "node test/harness.mjs",
+    "serve:stub": "node test/dev-server.mjs"
+  },
+  "devDependencies": {
+    "wrangler": "^4.158.0"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "keywords": [
+    "cloudflare",
+    "workers-ai",
+    "openai",
+    "images-api",
+    "flux",
+    "image-generation",
+    "wrangler"
+  ],
+  "cloudflare": {
+    "bindings": {
+      "BRIDGE_TOKEN": {
+        "description": "Bearer token clients must present. Generate one with `openssl rand -hex 32`."
+      }
+    }
+  }
+}

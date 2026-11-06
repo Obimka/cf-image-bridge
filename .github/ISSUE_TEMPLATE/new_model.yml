@@ -1,0 +1,58 @@
+name: Add a model
+description: Propose a Workers AI model for the bundled registry
+labels: [model]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        A new model is a `config/models.json` entry, not a code change. Check
+        `config/models.schema.json` for the accepted fields.
+  - type: input
+    id: cfid
+    attributes:
+      label: Workers AI model id
+      description: Must exist in the Workers AI catalog.
+      placeholder: "@cf/vendor/model"
+    validations:
+      required: true
+  - type: input
+    id: exposed
+    attributes:
+      label: Name to expose to clients
+      description: This is the `name` field, and the `id` a client configures.
+      placeholder: my-model
+    validations:
+      required: true
+  - type: dropdown
+    id: transport
+    attributes:
+      label: Transport
+      description: Multipart is required if the model accepts input images.
+      options: [json, multipart]
+    validations:
+      required: true
+  - type: input
+    id: size
+    attributes:
+      label: Size support
+      description: Accepted width/height range and step, or "fixed" if the model ignores size.
+      placeholder: 256-1920, step 16 / fixed 1024x1024
+  - type: input
+    id: refs
+    attributes:
+      label: Input images
+      description: How many references the model accepts, and the form field name if known.
+      placeholder: 0 / up to 4, input_image_{index}
+  - type: textarea
+    id: params
+    attributes:
+      label: Fixed parameters
+      description: Parameters the model requires on every request.
+      render: json
+      placeholder: '{"steps": 4}'
+  - type: textarea
+    id: verified
+    attributes:
+      label: How you verified it
+      description: What you called and what came back — especially rejections of unsupported fields.
+      placeholder: Called /ai/run/… with width/height; got 400 additionalProperties, so size is not supported.

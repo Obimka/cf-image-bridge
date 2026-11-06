@@ -1,0 +1,29 @@
+{
+  "$schema": "./models.schema.json",
+  "defaultModel": "flux-2-klein-4b",
+  "maxPromptLength": 2048,
+  "maxImages": 4,
+  "models": [
+    {
+      "name": "flux-2-klein-4b",
+      "id": "@cf/black-forest-labs/flux-2-klein-4b",
+      "transport": "multipart",
+      "size": {
+        "min": 256,
+        "max": 1920,
+        "step": 16,
+        "default": [1024, 1024]
+      },
+      "references": { "max": 4 },
+      "params": {}
+    },
+    {
+      "name": "flux-schnell",
+      "id": "@cf/black-forest-labs/flux-1-schnell",
+      "transport": "json",
+      "size": null,
+      "references": { "max": 0 },
+      "params": { "steps": 4 }
+    }
+  ]
+}

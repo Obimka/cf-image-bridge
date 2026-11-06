@@ -1,0 +1,9 @@
+# Local development variables for `wrangler dev`.
+# Copy to `.dev.vars` (git-ignored) and replace the placeholder.
+#
+# Required: the bearer token clients must present.
+BRIDGE_TOKEN=replace-with-a-long-random-string
+#
+# Optional: override the bundled model registry without rebuilding.
+# Must be a single-line JSON string matching config/models.schema.json.
+# MODELS_JSON={"defaultModel":"flux-2-klein-4b","models":[{"name":"flux-2-klein-4b","id":"@cf/black-forest-labs/flux-2-klein-4b","transport":"multipart","size":{"max":1920},"references":{"max":4}}]}

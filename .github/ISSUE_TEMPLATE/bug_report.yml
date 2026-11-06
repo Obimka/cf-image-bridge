@@ -1,0 +1,52 @@
+name: Bug report
+description: Something the bridge does that it should not
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Redact your `BRIDGE_TOKEN`, Cloudflare account id and deployed hostname before
+        pasting anything. If you paste a full request, remove the `authorization` header.
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened
+      description: The response body and status code are the most useful part.
+      placeholder: |
+        POST /v1/images/generations returned 400
+        {"error":{"message":"...","type":"...","code":"...","param":"..."}}
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: What you expected
+    validations:
+      required: true
+  - type: input
+    id: model
+    attributes:
+      label: Model id used
+      placeholder: flux-2-klein-4b
+  - type: textarea
+    id: registry
+    attributes:
+      label: Relevant registry entry (config/models.json)
+      description: The entry for the model in the request, if it is not a bundled one.
+      render: json
+  - type: dropdown
+    id: where
+    attributes:
+      label: Where it reproduces
+      options:
+        - Deployed Worker
+        - npm run serve:stub (stubbed AI binding)
+        - npm test
+        - npx wrangler dev
+    validations:
+      required: true
+  - type: input
+    id: versions
+    attributes:
+      label: Versions
+      placeholder: node v22.x, wrangler 4.x, commit sha

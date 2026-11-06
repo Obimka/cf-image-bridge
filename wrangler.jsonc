@@ -1,0 +1,9 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "cf-image-bridge",
+  "main": "src/worker.js",
+  "compatibility_date": "2026-11-06",
+  "observability": { "enabled": true },
+  "ai": { "binding": "AI" },
+  "workers_dev": true
+}
